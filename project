@@ -1,134 +1,78 @@
-import os
-import sqlite3
-from math import pi
+public class ComplexExample {
 
-# Database class for SQLite operations
-class Database:
-    def __init__(self, db_name="test.db"):
-        self.connection = sqlite3.connect(db_name)
-        self.cursor = self.connection.cursor()
-        self.create_table()
+    public static void main(String[] args) {
+        int sum = addNumbers(5, 10, 15);
+        System.out.println("Sum: " + sum);
 
-    def create_table(self):
-        self.cursor.execute('''CREATE TABLE IF NOT EXISTS users
-                               (id INTEGER PRIMARY KEY, name TEXT, age INTEGER)''')
-        self.connection.commit()
+        String message = printMessage();
+        System.out.println(message);
+        
+        int[] numbers = {1, 2, 3, 4};
+        int max = findMax(numbers);
+        System.out.println("Max: " + max);
+        
+        int divResult = divideNumbers(10, 0);
+        System.out.println("Division Result: " + divResult);
+        
+        int[] nums = {10, 20, 30};
+        int maxValue = findMaximumValue(nums);
+        System.out.println("Maximum Value: " + maxValue);
 
-    def add_user(self, name, age):
-        self.cursor.execute("INSERT INTO users (name, age) VALUES (?, ?)", (name, age))
-        self.connection.commit()
+        int invalidResult = computeValue(10, 20);
+        System.out.println("Invalid Result: " + invalidResult);
+    }
 
-    def get_users(self):
-        self.cursor.execute("SELECT * FROM users")
-        return self.cursor.fetchall()
+    // Function with duplicate definition
+    public static int addNumbers(int a, int b) {
+        return a + b;
+    }
 
-    def update_user(self, user_id, name, age):
-        self.cursor.execute("UPDATE users SET name = ?, age = ? WHERE id = ?", (name, age, user_id))
-        self.connection.commit()
+    public static int addNumbers(int a, int b, int c) {
+        return a + b + c;
+    }
 
-    def delete_user(self, user_id):
-        self.cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
-        self.connection.commit()
+    // Duplicate functions with errors
+    public static String printMessage() {
+        return "Hello world";
+    }
 
-    def close(self):
-        self.connection.close()
+    public static void printMessage() {
+        System.out.println("Hello world"); // Function signature mismatch
+    }
 
+    // Function with logical error
+    public static int divideNumbers(int a, int b) {
+        if (b == 0) {
+            return a / b; // Division by zero
+        }
+        return a / b;
+    }
 
-# Shape class hierarchy using OOP
-class Shape:
-    def area(self):
-        raise NotImplementedError("Subclasses should implement this!")
+    // Complex and erroneous maximum value finder
+    public static int findMax(int[] array) {
+        int max = array[0];
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] > max) {
+                max = array[i];
+            }
+        }
+        return max;
+    }
 
+    // Another duplicate maximum value finder
+    public static int findMaximumValue(int[] array) {
+        int maximum = array[0];
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] > maximum) {
+                maximum = array[i];
+            }
+        }
+        return maximum;
+    }
 
-class Circle(Shape):
-    def __init__(self, radius):
-        self.radius = radius
-
-    def area(self):
-        return pi * self.radius ** 2
-
-
-class Rectangle(Shape):
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
-
-    def area(self):
-        return self.width * self.height
-
-
-# FileHandler class for file operations
-class FileHandler:
-    def __init__(self, file_name="data.txt"):
-        self.file_name = file_name
-
-    def write_to_file(self, data):
-        with open(self.file_name, 'a') as file:
-            file.write(f"{data}\n")
-
-    def read_from_file(self):
-        if os.path.exists(self.file_name):
-            with open(self.file_name, 'r') as file:
-                return file.readlines()
-        else:
-            return []
-
-    def delete_file(self):
-        if os.path.exists(self.file_name):
-            os.remove(self.file_name)
-
-
-# Calculator class for basic operations
-class Calculator:
-    def add(self, x, y):
-        return x + y
-
-    def subtract(self, x, y):
-        return x - y
-
-    def multiply(self, x, y):
-        return x * y
-
-    def divide(self, x, y):
-        if y == 0:
-            raise ValueError("Cannot divide by zero!")
-        return x / y
-
-
-# Main function to test the classes
-def main():
-    # Database operations
-    db = Database()
-    db.add_user("Alice", 30)
-    db.add_user("Bob", 25)
-    users = db.get_users()
-    print("Users from DB:", users)
-    db.update_user(1, "Alice Smith", 31)
-    print("Updated Users:", db.get_users())
-    db.delete_user(2)
-    print("After Deletion:", db.get_users())
-    db.close()
-
-    # Shape operations
-    circle = Circle(5)
-    rectangle = Rectangle(4, 6)
-    print("Circle Area:", circle.area())
-    print("Rectangle Area:", rectangle.area())
-
-    # File operations
-    file_handler = FileHandler()
-    file_handler.write_to_file("Hello, World!")
-    file_handler.write_to_file("This is a test.")
-    print("File Contents:", file_handler.read_from_file())
-    file_handler.delete_file()
-
-    # Calculator operations
-    calculator = Calculator()
-    print("Addition:", calculator.add(10, 5))
-    print("Subtraction:", calculator.subtract(10, 5))
-    print("Multiplication:", calculator.multiply(10, 5))
-    print("Division:", calculator.divide(10, 5))
-
-
-if __name__ == "__main__":
-    main()
+    // Function with typo and logical errors
+    public static int computeValue(int a, int b) {
+        int result = a + b;
+        return resultt; // Typo: 'resultt' instead of 'result'
+    }
+}
